@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://cx2bdcdo5h07"]
+
+[ext_resource type="PackedScene" uid="uid://byque4w54oowj" path="res://player/player.tscn" id="1_qt3v5"]
+[ext_resource type="Script" uid="uid://1l22a17w6t3j" path="res://enemy/opponent.gd" id="2_xakic"]
+[ext_resource type="Texture2D" uid="uid://4q335xxs2p" path="res://icon.svg" id="3_kndnn"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_rxjn2"]
+
+[node name="World" type="Node3D" unique_id=1558480927]
+
+[node name="Player" parent="." unique_id=871467674 node_paths=PackedStringArray("opponent") instance=ExtResource("1_qt3v5")]
+opponent = NodePath("../Opponent")
+
+[node name="Opponent" type="CharacterBody3D" parent="." unique_id=1655037670]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.0476305)
+script = ExtResource("2_xakic")
+metadata/_custom_type_script = "uid://1l22a17w6t3j"
+
+[node name="Sprite3D" type="Sprite3D" parent="Opponent" unique_id=81742108]
+billboard = 2
+texture = ExtResource("3_kndnn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1123041766]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.232328, 0, -1.1874781)
+mesh = SubResource("PrismMesh_rxjn2")
