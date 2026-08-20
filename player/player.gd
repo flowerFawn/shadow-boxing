@@ -1,4 +1,5 @@
 extends CharacterBody3D
+class_name Player
 
 const ACCELERATION:float = 2
 const DECELERATION:float = 4
@@ -46,7 +47,7 @@ func handle_movement(delta:float) -> void:
 func handle_parallel_move(delta:float) -> void:
 	var parallel_acceleration:float
 	parallel_acceleration = Input.get_axis("move_back", "move_forward") * ACCELERATION
-	if (parallel_acceleration == 0 and parallel_speed != 0) or parallel_speed > MAX_SPEED:
+	if (parallel_acceleration == 0 and parallel_speed != 0) or abs(parallel_speed) > MAX_SPEED:
 		var deceleration_direction:float = -(parallel_speed / abs(parallel_speed))
 		parallel_acceleration = deceleration_direction * DECELERATION
 	parallel_speed += parallel_acceleration * delta
@@ -55,7 +56,7 @@ func handle_parallel_move(delta:float) -> void:
 func handle_perpendicular_move(delta:float) -> void:
 	var perpendicular_acceleration:float
 	perpendicular_acceleration = Input.get_axis("move_left", "move_right") * ACCELERATION
-	if (perpendicular_acceleration == 0 and perpendicular_speed != 0) or perpendicular_speed > MAX_SPEED:
+	if (perpendicular_acceleration == 0 and perpendicular_speed != 0) or abs(perpendicular_speed) > MAX_SPEED:
 		var deceleration_direction:float = -(perpendicular_speed / abs(perpendicular_speed))
 		perpendicular_acceleration = deceleration_direction * DECELERATION
 	perpendicular_speed += perpendicular_acceleration * delta
@@ -99,11 +100,11 @@ func handle_strafing() -> void:
 		
 		
 func strafe_perpendicular(direction:float) -> void:
-	print("strafe")
+	perpendicular_buffer = ""
 	perpendicular_speed = MAX_SPEED * direction * 2
 
 func strafe_parallel(direction:float) -> void:
-	print("dodge")
+	parallel_buffer = ""
 	parallel_speed = MAX_SPEED * direction * 1.5
 		
 		
