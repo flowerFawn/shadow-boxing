@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://cta53prguotks" path="res://player/assets/lr.png" id="5_2ieo8"]
 [ext_resource type="Texture2D" uid="uid://dhtcvs8o1sw4k" path="res://player/assets/sl.png" id="6_ebec5"]
 [ext_resource type="Texture2D" uid="uid://ckkfwtp8cd6v" path="res://player/assets/sr.png" id="7_yllr7"]
+[ext_resource type="Script" uid="uid://doawhcvio1rcn" path="res://utility/stopwatch.gd" id="8_rgyib"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_rxjn2"]
 animations = [{
@@ -59,10 +60,13 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Player" type="CharacterBody3D" unique_id=871467674 node_paths=PackedStringArray("camera", "sprite")]
+[node name="Player" type="CharacterBody3D" unique_id=871467674 node_paths=PackedStringArray("camera", "sprite", "parallel_buffer_timer", "perpendicular_buffer_timer", "arm_buffer_timer")]
 script = ExtResource("1_boad6")
 camera = NodePath("Camera3D")
 sprite = NodePath("AnimatedSprite3D")
+parallel_buffer_timer = NodePath("Time/ParallelBufferTimer")
+perpendicular_buffer_timer = NodePath("Time/PerpendicularBufferTimer")
+arm_buffer_timer = NodePath("Time/ArmBufferTimer")
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="." unique_id=1142002235]
 billboard = 2
@@ -72,3 +76,32 @@ animation = &"block"
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1751715230]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0.5)
+
+[node name="Time" type="Node" parent="." unique_id=1710641570]
+
+[node name="LeftStopwatch" type="Node" parent="Time" unique_id=1111878650]
+script = ExtResource("8_rgyib")
+metadata/_custom_type_script = "uid://doawhcvio1rcn"
+
+[node name="RightStopwatch" type="Node" parent="Time" unique_id=1014553686]
+script = ExtResource("8_rgyib")
+metadata/_custom_type_script = "uid://doawhcvio1rcn"
+
+[node name="ParallelBufferTimer" type="Timer" parent="Time" unique_id=22961285]
+wait_time = 0.2
+one_shot = true
+ignore_time_scale = true
+
+[node name="PerpendicularBufferTimer" type="Timer" parent="Time" unique_id=1370841062]
+wait_time = 0.2
+one_shot = true
+ignore_time_scale = true
+
+[node name="ArmBufferTimer" type="Timer" parent="Time" unique_id=112539947]
+wait_time = 0.2
+one_shot = true
+ignore_time_scale = true
+
+[connection signal="timeout" from="Time/ParallelBufferTimer" to="." method="_on_parallel_buffer_timer_timeout"]
+[connection signal="timeout" from="Time/PerpendicularBufferTimer" to="." method="_on_perpendicular_buffer_timer_timeout"]
+[connection signal="timeout" from="Time/ArmBufferTimer" to="." method="_on_arm_buffer_timer_timeout"]
