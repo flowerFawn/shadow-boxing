@@ -2,8 +2,8 @@ extends CharacterBody3D
 
 const ACCELERATION:float = 2
 const MAX_SPEED:float = 1
+const CAMERA_DISTANCE:float = 0.5
 @export var camera:Camera3D
-@export var camera_rig:Node3D
 @export var sprite:AnimatedSprite3D
 @export var opponent:Opponent
 
@@ -44,8 +44,10 @@ func handle_relative() -> void:
 func face_opponent() -> void:
 	var x_dif:float = global_position.x - opponent.global_position.x
 	var z_dif:float = global_position.z - opponent.global_position.z
-	camera_rig.rotation.y = (atan(z_dif / x_dif) + (PI / 2))
-	print("X: " + str(x_dif))
-	print("Z: " + str(z_dif))
-	print(camera_rig.rotation.y)
-	print(camera_rig.global_position)
+	var difference_vector:Vector2
+	difference_vector.x = x_dif
+	difference_vector.y = z_dif
+	difference_vector = difference_vector.normalized() * CAMERA_DISTANCE
+	camera.position.x = difference_vector.x
+	camera.position.z = difference_vector.y
+	camera.rotation.y = atan2(camera.position.x, camera.position.z)

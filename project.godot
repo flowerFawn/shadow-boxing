@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="New Game Project"
+config/name="Shadow Boxing"
 run/main_scene="uid://cx2bdcdo5h07"
 config/features=PackedStringArray("4.7", "Mobile")
 config/icon="res://icon.svg"

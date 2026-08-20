@@ -59,12 +59,9 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="SphereMesh" id="SphereMesh_rxjn2"]
-
-[node name="Player" type="CharacterBody3D" unique_id=871467674 node_paths=PackedStringArray("camera", "camera_rig", "sprite")]
+[node name="Player" type="CharacterBody3D" unique_id=871467674 node_paths=PackedStringArray("camera", "sprite")]
 script = ExtResource("1_boad6")
-camera = NodePath("CameraRig/Camera3D")
-camera_rig = NodePath("CameraRig")
+camera = NodePath("Camera3D")
 sprite = NodePath("AnimatedSprite3D")
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="." unique_id=1142002235]
@@ -73,11 +70,5 @@ texture_filter = 2
 sprite_frames = SubResource("SpriteFrames_rxjn2")
 animation = &"block"
 
-[node name="CameraRig" type="Node3D" parent="." unique_id=800532905]
-
-[node name="Camera3D" type="Camera3D" parent="CameraRig" unique_id=1751715230]
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1751715230]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0.5)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CameraRig" unique_id=390821536]
-transform = Transform3D(0.7275305, 0, 0, 0, 0.36000735, 0, 0, 0, 0.3290185, 0, 0.2970752, 0.5177465)
-mesh = SubResource("SphereMesh_rxjn2")
