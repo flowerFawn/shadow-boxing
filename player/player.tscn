@@ -60,13 +60,15 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Player" type="CharacterBody3D" unique_id=871467674 node_paths=PackedStringArray("camera", "sprite", "parallel_buffer_timer", "perpendicular_buffer_timer", "arm_buffer_timer")]
+[node name="Player" type="CharacterBody3D" unique_id=871467674 node_paths=PackedStringArray("camera", "sprite", "parallel_buffer_timer", "perpendicular_buffer_timer", "arm_buffer_timer", "left_stopwatch", "right_stopwatch")]
 script = ExtResource("1_boad6")
 camera = NodePath("Camera3D")
 sprite = NodePath("AnimatedSprite3D")
 parallel_buffer_timer = NodePath("Time/ParallelBufferTimer")
 perpendicular_buffer_timer = NodePath("Time/PerpendicularBufferTimer")
 arm_buffer_timer = NodePath("Time/ArmBufferTimer")
+left_stopwatch = NodePath("Time/LeftStopwatch")
+right_stopwatch = NodePath("Time/RightStopwatch")
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="." unique_id=1142002235]
 billboard = 2

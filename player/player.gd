@@ -1,10 +1,30 @@
 extends CharacterBody3D
 class_name Player
 
+enum ArmState {
+	PASSIVE,
+	CHARGING,
+	PUNCHING,
+	BLOCKING,
+}
+
+enum Arm {
+	LEFT,
+	RIGHT,
+	BOTH,
+}
+
 const ACCELERATION:float = 2
 const DECELERATION:float = 4
 const MAX_SPEED:float = 1
 const CAMERA_DISTANCE:float = 0.5
+const STRONG_THRESHOLD:float = 0.4
+const STRONG_DAMAGE:float = 2
+const LIGHT_DAMAGE:float = 1
+const STRONG_RANGE:float = 0.6
+const LIGHT_RANGE:float = 1
+
+
 @export var camera:Camera3D
 @export var sprite:AnimatedSprite3D
 @export var opponent:Opponent
@@ -12,6 +32,9 @@ const CAMERA_DISTANCE:float = 0.5
 @export var parallel_buffer_timer:Timer
 @export var perpendicular_buffer_timer:Timer
 @export var arm_buffer_timer:Timer
+
+@export var left_stopwatch:Stopwatch
+@export var right_stopwatch:Stopwatch
 
 var parallel_speed:float
 var perpendicular_speed:float
@@ -30,9 +53,13 @@ var arm_buffer:String:
 		arm_buffer_timer.start()
 
 
+var left_arm_state:ArmState
+var right_arm_state:ArmState
+
 func _physics_process(delta: float) -> void:
 	handle_movement(delta)
 	handle_strafing()
+	handle_attacking()
 	move_and_collide(velocity * delta)
 	
 #region movement
@@ -83,6 +110,7 @@ func face_opponent() -> void:
 
 #endregion
 
+#region strafing
 func handle_strafing() -> void:
 	if Input.is_action_just_pressed("move_left"):
 		if perpendicular_buffer == "move_left":
@@ -107,9 +135,76 @@ func strafe_parallel(direction:float) -> void:
 	parallel_buffer = ""
 	parallel_speed = MAX_SPEED * direction * 1.5
 		
-		
+#endregion
+
+#region attacking
+
+func handle_attacking() -> void:
+	if Input.is_action_just_pressed("right_arm") and Input.is_action_just_pressed("left_arm"):
+		block()
+	elif Input.is_action_just_pressed("left_arm"):
+		if Input.is_action_pressed("right_arm"):
+			block()
+		else:
+			charge_arm(Arm.LEFT)
+	elif Input.is_action_just_pressed("right_arm"):
+		if Input.is_action_pressed("left_arm"):
+			block()
+		else:
+			charge_arm(Arm.RIGHT)
+			
+	if Input.is_action_just_released("left_arm") and left_arm_state == ArmState.CHARGING:
+		release_arm(Arm.LEFT)
+	elif Input.is_action_just_pressed("right_arm") and right_arm_state == ArmState.CHARGING:
+		release_arm(Arm.RIGHT)
+
+
 func block():
-	pass
+	left_stopwatch.reset()
+	right_stopwatch.reset()
+	left_arm_state = ArmState.BLOCKING
+	right_arm_state = ArmState.BLOCKING
+	
+func charge_arm(arm:Arm) -> void:
+	if arm == Arm.LEFT:
+		left_stopwatch.start()
+		left_arm_state = ArmState.CHARGING
+	elif arm == Arm.RIGHT:
+		right_stopwatch.start()
+		right_arm_state = ArmState.CHARGING
+	
+func release_arm(arm:Arm) -> void:
+	if arm == Arm.LEFT:
+		left_stopwatch.pause()
+		if left_stopwatch.time_elapsed >= STRONG_THRESHOLD:
+			strong_punch(arm)
+		else:
+			light_punch(arm)
+	elif arm == Arm.RIGHT:
+		if right_stopwatch.time_elapsed >= STRONG_THRESHOLD:
+			strong_punch(arm)
+		else:
+			light_punch(arm)
+		
+func light_punch(arm:Arm):
+	if not is_in_distance(LIGHT_RANGE):
+		print("too_far")
+		return
+	opponent.take_damage(LIGHT_DAMAGE)
+	
+func strong_punch(arm:Arm):
+	if not is_in_distance(STRONG_RANGE):
+		print("too_far")
+		return
+	opponent.take_damage(STRONG_DAMAGE)
+	
+func is_in_distance(distance:float) -> bool:
+	print(distance ** 2)
+	print(global_position.distance_squared_to(opponent.global_position))
+	return global_position.distance_squared_to(opponent.global_position) <= distance ** 2
+	
+	
+#endregion
 
 
 func _on_parallel_buffer_timer_timeout() -> void:

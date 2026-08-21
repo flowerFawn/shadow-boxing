@@ -5,10 +5,16 @@ var time_elapsed:float = 0
 var ignores_timescale:bool = false
 var paused:bool = true
 
-func start() -> void:
+func start(reset_on_start:bool = true) -> void:
+	if reset_on_start:
+		reset(false)
 	paused = false
 	
 func pause() -> void:
+	paused = true
+	
+func reset(pause:bool = true) -> void:
+	time_elapsed = 0
 	paused = true
 
 
