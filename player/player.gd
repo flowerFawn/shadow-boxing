@@ -4,7 +4,6 @@ class_name Player
 enum ArmState {
 	PASSIVE,
 	CHARGING,
-	PUNCHING,
 	BLOCKING,
 }
 
@@ -174,8 +173,9 @@ func charge_arm(arm:Arm) -> void:
 		right_arm_state = ArmState.CHARGING
 	
 func release_arm(arm:Arm) -> void:
+	if is_strafing():
+		end_punch(arm)
 	if arm == Arm.LEFT:
-		left_stopwatch.pause()
 		if left_stopwatch.time_elapsed >= STRONG_THRESHOLD:
 			strong_punch(arm)
 		else:
@@ -185,18 +185,29 @@ func release_arm(arm:Arm) -> void:
 			strong_punch(arm)
 		else:
 			light_punch(arm)
+			
+#includes cancelling
+func end_punch(arm:Arm):
+	if arm == Arm.LEFT:
+		left_stopwatch.pause()
+		left_arm_state = ArmState.PASSIVE
+	elif arm == Arm.RIGHT:
+		left_stopwatch.pause()
+		left_arm_state = ArmState.PASSIVE
 		
 func light_punch(arm:Arm):
 	if not is_in_distance(LIGHT_RANGE):
 		print("too_far")
 		return
 	opponent.take_damage(LIGHT_DAMAGE)
+	end_punch(arm)
 	
 func strong_punch(arm:Arm):
 	if not is_in_distance(STRONG_RANGE):
 		print("too_far")
 		return
 	opponent.take_damage(STRONG_DAMAGE)
+	end_punch(arm)
 	
 func is_in_distance(distance:float) -> bool:
 	print(distance ** 2)
@@ -205,6 +216,9 @@ func is_in_distance(distance:float) -> bool:
 	
 	
 #endregion
+
+func is_strafing() -> bool:
+	return parallel_speed > MAX_SPEED or perpendicular_speed > MAX_SPEED
 
 
 func _on_parallel_buffer_timer_timeout() -> void:

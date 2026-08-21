@@ -3,6 +3,8 @@ class_name Opponent
 
 @export var player:Player
 
+@export var front_sprite:Sprite3D
+
 @export var turn_speed:float = PI / 2
 
 @export var max_hp:float = 10
@@ -23,5 +25,8 @@ func face_player(delta:float) -> void:
 	rotation.y = lerp_angle(rotation.y, desired_rotation, turn_speed * delta)
 
 func take_damage(damage:float) -> void:
+	front_sprite.flip_v = true
 	hp -= damage
 	print("owie by " + str(damage))
+	await get_tree().create_timer(0.3).timeout
+	front_sprite.flip_v = false

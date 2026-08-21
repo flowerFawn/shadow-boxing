@@ -3,9 +3,9 @@
 [ext_resource type="Script" uid="uid://1l22a17w6t3j" path="res://enemy/opponent.gd" id="1_1yv2p"]
 [ext_resource type="Texture2D" uid="uid://4q335xxs2p" path="res://icon.svg" id="2_pkd70"]
 
-[node name="Opponent" type="CharacterBody3D" unique_id=328303917 node_paths=PackedStringArray("player")]
+[node name="Opponent" type="CharacterBody3D" unique_id=328303917 node_paths=PackedStringArray("front_sprite")]
 script = ExtResource("1_1yv2p")
-player = NodePath("")
+front_sprite = NodePath("Sprite3D")
 metadata/_custom_type_script = "uid://1l22a17w6t3j"
 
 [node name="Sprite3D" type="Sprite3D" parent="." unique_id=1932276235]
