@@ -58,6 +58,8 @@ func handle_parallel_move(delta:float) -> void:
 	if (parallel_acceleration == 0 and parallel_speed != 0) or abs(parallel_speed) > MAX_SPEED:
 		var deceleration_direction:float = -(parallel_speed / abs(parallel_speed))
 		parallel_acceleration = deceleration_direction * DECELERATION
+	elif abs(parallel_speed) > 0 and get_distance_to_opponent() < 0.05:
+		parallel_speed = clamp(parallel_speed, -MAX_SPEED, 0)
 	parallel_speed += parallel_acceleration * delta
 	#parallel_speed = clamp(parallel_speed, -MAX_SPEED, MAX_SPEED)
 	
@@ -235,6 +237,11 @@ func strong_punch(arm:Arm):
 func is_in_distance(distance:float) -> bool:
 	return global_position.distance_squared_to(opponent.global_position) <= distance ** 2
 	
+func get_distance_to_opponent_squared() -> float:
+	return global_position.distance_squared_to(opponent.global_position)
+	
+func get_distance_to_opponent() -> float:
+	return sqrt(get_distance_to_opponent_squared())
 	
 #endregion
 

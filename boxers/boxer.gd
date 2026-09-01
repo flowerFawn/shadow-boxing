@@ -65,7 +65,6 @@ func set_state(new_state:BoxerState) -> void:
 	boxer_state = new_state
 
 func update_sprite():
-	print(BoxerState.keys()[boxer_state])
 	set_sprite_animation(BoxerState.keys()[boxer_state])
 	
 func set_sprite_animation(animation:StringName):
