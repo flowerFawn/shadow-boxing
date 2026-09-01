@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://c5rgrpvrovhis"]
+
+[ext_resource type="Script" uid="uid://1l22a17w6t3j" path="res://boxers/enemy/opponent.gd" id="1_1yv2p"]
+[ext_resource type="Texture2D" uid="uid://4q335xxs2p" path="res://icon.svg" id="2_pkd70"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rxjn2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_pkd70")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Opponent" type="CharacterBody3D" unique_id=328303917]
+script = ExtResource("1_1yv2p")
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="." unique_id=1844665883]
+sprite_frames = SubResource("SpriteFrames_rxjn2")
+
+[node name="Sprite3D2" type="Sprite3D" parent="." unique_id=936008913]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+modulate = Color(1, 0, 0, 1)
+double_sided = false
+texture = ExtResource("2_pkd70")

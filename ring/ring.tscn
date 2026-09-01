@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cx2bdcdo5h07"]
 
-[ext_resource type="PackedScene" uid="uid://byque4w54oowj" path="res://player/player.tscn" id="1_qt3v5"]
-[ext_resource type="PackedScene" uid="uid://c5rgrpvrovhis" path="res://enemy/opponent.tscn" id="2_oceik"]
+[ext_resource type="PackedScene" uid="uid://byque4w54oowj" path="res://boxers/player/player.tscn" id="1_qt3v5"]
+[ext_resource type="PackedScene" uid="uid://c5rgrpvrovhis" path="res://boxers/enemy/opponent.tscn" id="2_oceik"]
 
 [sub_resource type="PrismMesh" id="PrismMesh_rxjn2"]
 

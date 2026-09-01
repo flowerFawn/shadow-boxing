@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ckkfwtp8cd6v"
-path.s3tc="res://.godot/imported/sr.png-3fe774a14c9bfcec880838028af27aa9.s3tc.ctex"
+uid="uid://km8oqag3ss1j"
+path.s3tc="res://.godot/imported/ll.png-cf7056999d548ace869b921ede801b36.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://player/assets/sr.png"
-dest_files=["res://.godot/imported/sr.png-3fe774a14c9bfcec880838028af27aa9.s3tc.ctex"]
+source_file="res://boxers/player/assets/ll.png"
+dest_files=["res://.godot/imported/ll.png-cf7056999d548ace869b921ede801b36.s3tc.ctex"]
 
 [params]
 

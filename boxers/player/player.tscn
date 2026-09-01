@@ -1,80 +1,24 @@
 [gd_scene format=3 uid="uid://byque4w54oowj"]
 
-[ext_resource type="Script" uid="uid://x3lektvp28jy" path="res://player/player.gd" id="1_boad6"]
-[ext_resource type="Texture2D" uid="uid://cangrgnabsbs3" path="res://player/assets/base.png" id="2_rgyib"]
-[ext_resource type="Texture2D" uid="uid://bbad1ktdvagpb" path="res://player/assets/block.png" id="3_hg6s5"]
-[ext_resource type="Texture2D" uid="uid://km8oqag3ss1j" path="res://player/assets/ll.png" id="4_8t03j"]
-[ext_resource type="Texture2D" uid="uid://cta53prguotks" path="res://player/assets/lr.png" id="5_2ieo8"]
-[ext_resource type="Texture2D" uid="uid://dhtcvs8o1sw4k" path="res://player/assets/sl.png" id="6_ebec5"]
-[ext_resource type="Texture2D" uid="uid://ckkfwtp8cd6v" path="res://player/assets/sr.png" id="7_yllr7"]
+[ext_resource type="Script" uid="uid://x3lektvp28jy" path="res://boxers/player/player.gd" id="1_boad6"]
+[ext_resource type="SpriteFrames" uid="uid://c6ytntwqxogk2" path="res://boxers/player/assets/player_animations.tres" id="2_p6wga"]
 [ext_resource type="Script" uid="uid://doawhcvio1rcn" path="res://utility/stopwatch.gd" id="8_rgyib"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_rxjn2"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("2_rgyib")
-}],
-"loop": 1,
-"name": &"base",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("3_hg6s5")
-}],
-"loop": 1,
-"name": &"block",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("4_8t03j")
-}],
-"loop": 1,
-"name": &"light_left",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("5_2ieo8")
-}],
-"loop": 1,
-"name": &"light_right",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("6_ebec5")
-}],
-"loop": 1,
-"name": &"strong_left",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("7_yllr7")
-}],
-"loop": 1,
-"name": &"strong_right",
-"speed": 5.0
-}]
-
-[node name="Player" type="CharacterBody3D" unique_id=871467674 node_paths=PackedStringArray("camera", "sprite", "parallel_buffer_timer", "perpendicular_buffer_timer", "arm_buffer_timer", "left_stopwatch", "right_stopwatch")]
+[node name="Player" type="CharacterBody3D" unique_id=871467674 node_paths=PackedStringArray("camera", "parallel_buffer_timer", "perpendicular_buffer_timer", "arm_buffer_timer", "left_stopwatch", "right_stopwatch", "sprite")]
 script = ExtResource("1_boad6")
 camera = NodePath("Camera3D")
-sprite = NodePath("AnimatedSprite3D")
 parallel_buffer_timer = NodePath("Time/ParallelBufferTimer")
 perpendicular_buffer_timer = NodePath("Time/PerpendicularBufferTimer")
 arm_buffer_timer = NodePath("Time/ArmBufferTimer")
 left_stopwatch = NodePath("Time/LeftStopwatch")
 right_stopwatch = NodePath("Time/RightStopwatch")
+sprite = NodePath("AnimatedSprite3D")
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="." unique_id=1142002235]
 billboard = 2
 texture_filter = 2
-sprite_frames = SubResource("SpriteFrames_rxjn2")
-animation = &"block"
+sprite_frames = ExtResource("2_p6wga")
+animation = &"HURTING"
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1751715230]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0.5)

@@ -1,31 +1,11 @@
-extends CharacterBody3D
+extends Boxer
 class_name Player
 
-enum ArmState {
-	PASSIVE,
-	CHARGING,
-	BLOCKING,
-}
 
-enum Arm {
-	LEFT,
-	RIGHT,
-	BOTH,
-}
 
-const ACCELERATION:float = 2
-const DECELERATION:float = 4
-const MAX_SPEED:float = 1
-const CAMERA_DISTANCE:float = 0.5
-const STRONG_THRESHOLD:float = 0.4
-const STRONG_DAMAGE:float = 2
-const LIGHT_DAMAGE:float = 1
-const STRONG_RANGE:float = 0.6
-const LIGHT_RANGE:float = 1
 
 
 @export var camera:Camera3D
-@export var sprite:AnimatedSprite3D
 @export var opponent:Opponent
 
 @export var parallel_buffer_timer:Timer
@@ -60,6 +40,8 @@ func _physics_process(delta: float) -> void:
 	handle_strafing()
 	handle_attacking()
 	move_and_collide(velocity * delta)
+	check_strafe_end()
+	update_sprite()
 	
 #region movement
 
@@ -111,6 +93,8 @@ func face_opponent() -> void:
 
 #region strafing
 func handle_strafing() -> void:
+	if is_strafing():
+		return
 	if Input.is_action_just_pressed("move_left"):
 		if perpendicular_buffer == "move_left":
 			strafe_perpendicular(-1)
@@ -129,10 +113,42 @@ func handle_strafing() -> void:
 func strafe_perpendicular(direction:float) -> void:
 	perpendicular_buffer = ""
 	perpendicular_speed = MAX_SPEED * direction * 2
+	if direction == -1:
+		set_state(BoxerState.STRAFING_LEFT)
+	else:
+		set_state(BoxerState.STRAFING_RIGHT)
 
 func strafe_parallel(direction:float) -> void:
 	parallel_buffer = ""
 	parallel_speed = MAX_SPEED * direction * 1.5
+	set_state(BoxerState.STRAFING_BACK)
+	
+func is_strafing() -> bool:
+	return abs(parallel_speed) > MAX_SPEED or abs(perpendicular_speed) > MAX_SPEED
+	
+##Can only ever be strafing in one direction
+func get_strafing_info() -> int:
+	#if abs(parallel_speed) <= MAX_SPEED and abs(perpendicular_speed) <= MAX_SPEED:
+		#return StrafeDirection.NONE
+	#elif perpendicular_speed < -MAX_SPEED:
+		#return StrafeDirection.LEFT
+	#elif perpendicular_speed > MAX_SPEED:
+		#return StrafeDirection.RIGHT
+	#elif parallel_speed < -MAX_SPEED:
+		#return StrafeDirection.BACK
+	#else:
+		#return StrafeDirection.NONE
+	if boxer_state > BoxerState.BASE and boxer_state <= BoxerState.STRAFING_BACK:
+		return boxer_state #strafe directions and states are equivelent enum values
+	else:
+		return StrafeDirection.NONE
+		
+func check_strafe_end() -> void:
+	if boxer_state == BoxerState.STRAFING_LEFT or boxer_state == BoxerState.STRAFING_RIGHT:
+		if abs(perpendicular_speed) <= MAX_SPEED:
+			set_state(BoxerState.BASE)
+	elif boxer_state == BoxerState.STRAFING_BACK and abs(parallel_speed) <= MAX_SPEED:
+		set_state(BoxerState.BASE)
 		
 #endregion
 
@@ -154,7 +170,7 @@ func handle_attacking() -> void:
 			
 	if Input.is_action_just_released("left_arm") and left_arm_state == ArmState.CHARGING:
 		release_arm(Arm.LEFT)
-	elif Input.is_action_just_pressed("right_arm") and right_arm_state == ArmState.CHARGING:
+	elif Input.is_action_just_released("right_arm") and right_arm_state == ArmState.CHARGING:
 		release_arm(Arm.RIGHT)
 
 
@@ -169,8 +185,12 @@ func charge_arm(arm:Arm) -> void:
 		left_stopwatch.start()
 		left_arm_state = ArmState.CHARGING
 	elif arm == Arm.RIGHT:
+		print("right arm charge")
+		print(arm)
 		right_stopwatch.start()
 		right_arm_state = ArmState.CHARGING
+	set_state(BoxerState.LIGHT_CHARGING + arm)
+	print(get_state_string())
 	
 func release_arm(arm:Arm) -> void:
 	if is_strafing():
@@ -194,31 +214,31 @@ func end_punch(arm:Arm):
 	elif arm == Arm.RIGHT:
 		left_stopwatch.pause()
 		left_arm_state = ArmState.PASSIVE
+	set_state(BoxerState.BASE)
 		
 func light_punch(arm:Arm):
 	if not is_in_distance(LIGHT_RANGE):
-		print("too_far")
+		end_punch(arm)
 		return
 	opponent.take_damage(LIGHT_DAMAGE)
+	set_state(BoxerState.LIGHT_PUNCHING + arm)
 	end_punch(arm)
 	
 func strong_punch(arm:Arm):
 	if not is_in_distance(STRONG_RANGE):
-		print("too_far")
+		end_punch(arm)
 		return
 	opponent.take_damage(STRONG_DAMAGE)
+	set_state(BoxerState.STRONG_PUNCHING + arm)
 	end_punch(arm)
 	
 func is_in_distance(distance:float) -> bool:
-	print(distance ** 2)
-	print(global_position.distance_squared_to(opponent.global_position))
 	return global_position.distance_squared_to(opponent.global_position) <= distance ** 2
 	
 	
 #endregion
 
-func is_strafing() -> bool:
-	return parallel_speed > MAX_SPEED or perpendicular_speed > MAX_SPEED
+
 
 
 func _on_parallel_buffer_timer_timeout() -> void:
@@ -231,3 +251,4 @@ func _on_perpendicular_buffer_timer_timeout() -> void:
 
 func _on_arm_buffer_timer_timeout() -> void:
 	arm_buffer = ""
+	

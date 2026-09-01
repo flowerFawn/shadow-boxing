@@ -1,0 +1,100 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://c6ytntwqxogk2"]
+
+[ext_resource type="Texture2D" uid="uid://cangrgnabsbs3" path="res://boxers/player/assets/base.png" id="1_dmky6"]
+[ext_resource type="Texture2D" uid="uid://bbad1ktdvagpb" path="res://boxers/player/assets/block.png" id="2_n2hgp"]
+[ext_resource type="Texture2D" uid="uid://pygxw0rg8b3" path="res://boxers/player/assets/hurting.png" id="3_taqgr"]
+[ext_resource type="Texture2D" uid="uid://km8oqag3ss1j" path="res://boxers/player/assets/ll.png" id="4_bvcx8"]
+[ext_resource type="Texture2D" uid="uid://cta53prguotks" path="res://boxers/player/assets/lr.png" id="5_c16df"]
+[ext_resource type="Texture2D" uid="uid://dhtcvs8o1sw4k" path="res://boxers/player/assets/sl.png" id="6_l7rhb"]
+[ext_resource type="Texture2D" uid="uid://ckkfwtp8cd6v" path="res://boxers/player/assets/sr.png" id="7_bkuck"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_dmky6")
+}],
+"loop": 1,
+"name": &"BASE",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_n2hgp")
+}],
+"loop": 1,
+"name": &"BLOCKING",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_taqgr")
+}],
+"loop": 1,
+"name": &"HURTING",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_bvcx8")
+}],
+"loop": 1,
+"name": &"LIGHT_LEFT_CHARGING",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_bvcx8")
+}],
+"loop": 1,
+"name": &"LIGHT_LEFT_PUNCHING",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_c16df")
+}],
+"loop": 1,
+"name": &"LIGHT_RIGHT_CHARGING",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_c16df")
+}],
+"loop": 1,
+"name": &"LIGHT_RIGHT_PUNCHING",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_l7rhb")
+}],
+"loop": 1,
+"name": &"STRONG_LEFT_CHARGING",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_l7rhb")
+}],
+"loop": 1,
+"name": &"STRONG_LEFT_PUNCHING",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_bkuck")
+}],
+"loop": 1,
+"name": &"STRONG_RIGHT_CHARGING",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_bkuck")
+}],
+"loop": 1,
+"name": &"STRONG_RIGHT_PUNCHING",
+"speed": 5.0
+}]

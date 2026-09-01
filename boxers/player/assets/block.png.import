@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bbad1ktdvagpb"
-path.s3tc="res://.godot/imported/block.png-a022a4f0760ab425231adcdf12c3e1a2.s3tc.ctex"
+path.s3tc="res://.godot/imported/block.png-c4c93b99f6407184df6761b6dd6bac52.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://player/assets/block.png"
-dest_files=["res://.godot/imported/block.png-a022a4f0760ab425231adcdf12c3e1a2.s3tc.ctex"]
+source_file="res://boxers/player/assets/block.png"
+dest_files=["res://.godot/imported/block.png-c4c93b99f6407184df6761b6dd6bac52.s3tc.ctex"]
 
 [params]
 
