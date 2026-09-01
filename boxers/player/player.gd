@@ -170,7 +170,10 @@ func handle_attacking() -> void:
 		else:
 			charge_arm(Arm.RIGHT)
 			
-	if Input.is_action_just_released("left_arm") and left_arm_state == ArmState.CHARGING:
+			
+	if Input.is_action_just_released("left_arm") or Input.is_action_just_released("right_arm") and boxer_state == BoxerState.BLOCKING:
+		end_block()
+	elif Input.is_action_just_released("left_arm") and left_arm_state == ArmState.CHARGING:
 		release_arm(Arm.LEFT)
 	elif Input.is_action_just_released("right_arm") and right_arm_state == ArmState.CHARGING:
 		release_arm(Arm.RIGHT)
@@ -181,6 +184,12 @@ func block():
 	right_stopwatch.reset()
 	left_arm_state = ArmState.BLOCKING
 	right_arm_state = ArmState.BLOCKING
+	boxer_state = BoxerState.BLOCKING
+	
+func end_block():
+	left_arm_state = ArmState.PASSIVE
+	right_arm_state = ArmState.PASSIVE
+	boxer_state = BoxerState.BASE
 	
 func charge_arm(arm:Arm) -> void:
 	if arm == Arm.LEFT:

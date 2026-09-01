@@ -5,8 +5,11 @@
 [ext_resource type="Texture2D" uid="uid://pygxw0rg8b3" path="res://boxers/player/assets/hurting.png" id="3_taqgr"]
 [ext_resource type="Texture2D" uid="uid://km8oqag3ss1j" path="res://boxers/player/assets/ll.png" id="4_bvcx8"]
 [ext_resource type="Texture2D" uid="uid://cta53prguotks" path="res://boxers/player/assets/lr.png" id="5_c16df"]
+[ext_resource type="Texture2D" uid="uid://brfe8mgv5wek" path="res://boxers/player/assets/strafe_back.png" id="6_bvcx8"]
 [ext_resource type="Texture2D" uid="uid://dhtcvs8o1sw4k" path="res://boxers/player/assets/sl.png" id="6_l7rhb"]
 [ext_resource type="Texture2D" uid="uid://ckkfwtp8cd6v" path="res://boxers/player/assets/sr.png" id="7_bkuck"]
+[ext_resource type="Texture2D" uid="uid://u01iulvxk2kr" path="res://boxers/player/assets/strafe_left.png" id="7_c16df"]
+[ext_resource type="Texture2D" uid="uid://d1eavfbg8a0ty" path="res://boxers/player/assets/strafe_right.png" id="8_l7rhb"]
 
 [resource]
 animations = [{
@@ -64,6 +67,30 @@ animations = [{
 }],
 "loop": 1,
 "name": &"LIGHT_RIGHT_PUNCHING",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_bvcx8")
+}],
+"loop": 1,
+"name": &"STRAFING_BACK",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_c16df")
+}],
+"loop": 1,
+"name": &"STRAFING_LEFT",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_l7rhb")
+}],
+"loop": 1,
+"name": &"STRAFING_RIGHT",
 "speed": 5.0
 }, {
 "frames": [{
